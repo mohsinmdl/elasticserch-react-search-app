@@ -38,15 +38,47 @@
             )
         };
 
-        
-        class App extends React.Component {
-            state = {
-                movies: []
+
+
+
+        class InputApp extends React.Component {
+
+            constructor(props) {
+                super(props);
+
+                this.state = {
+                    username: '',
+                    movies: []
+                }
+
+                this.updateInput = this.updateInput.bind(this);
+                this.handleSubmit = this.handleSubmit.bind(this);
+                
             }
 
-            componentDidMount() {
-                // fetch('http://localhost:9200/*/_search?q=title:the')
-                fetch('http://localhost:9200/neo-movie/Movie/805')
+            // componentDidMount() {
+            //     // fetch('http://localhost:9200/*/_search?q=title:the')
+            //     fetch('http://localhost:9200/neo-movie/Movie/805')
+            //         .then(res => res.json())
+            //         .then((data) => {
+            //             this.setState({ movies: data._source })
+            //             console.log(data._source)
+
+            //         })
+            //         .catch(console.log)
+            // }
+
+
+
+            updateInput(event) {
+                this.setState({ username: event.target.value })
+            }
+
+
+            handleSubmit() {
+                
+                console.log('Your input value is: ' + this.state.username);
+                fetch('http://localhost:9200/neo-movie/Movie/'+ this.state.username)
                     .then(res => res.json())
                     .then((data) => {
                         this.setState({ movies: data._source })
@@ -54,23 +86,29 @@
 
                     })
                     .catch(console.log)
+                //Send state to the server code
             }
+
+
 
             render() {
                 return (
-                    <Movies movies={this.state.movies} />
-                )
+                    <div>
+                        <input type="text" onChange={this.updateInput}></input>
+                        <input type="submit" onClick={this.handleSubmit} ></input>
+                        <Movies movies={this.state.movies} />
+                    </div>
+                );
             }
-
-
         }
 
 
         ReactDOM.render(
-            <App />,
+            <InputApp />,
             document.getElementById("root")
         );
     </script>
-    
+
 </body>
+
 </html>
