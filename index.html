@@ -41,16 +41,15 @@
         const MoviesList = (movies) => {
             return (
 
-                // console.log(movies)
-                // movies.movies.map((p, i) =>
-                //     <div className="partners" >
-                //         <div key={i}> {p.id} </div>
-                //     </div>
-                // )
-                console.log(typeof(movies))
-                // movies.map(function (item, i) {
-                //         return <li key={i}>{item}</li>;
-                //     })
+
+                <div>
+                
+                    {console.log("Going to iterate list from MoviesList")}
+                            {movies.map(function (item, i) {
+                                <div> {item}</div>
+                            })}
+                </div>
+
 
 
             )
@@ -107,39 +106,39 @@
 
             searchViaName() {
 
-                
+
                 console.log('Your input value is: ' + this.state.movieName);
                 fetch('http://localhost:9200/*/_search?q=title:' + this.state.movieName)
                     .then(res => res.json())
                     .then((data) => {
 
                         console.log(data.hits.hits)
-                        let allcities = data.hits.hits;
-                        let tempCities = [];
-                        allcities.forEach(elem => {
-                            tempCities.push({ _source: elem['_source'] });
+                        let allmovies = data.hits.hits;
+                        let tempMovies = [];
+                        allmovies.forEach(elem => {
+                            tempMovies.push({ _source: elem['_source'] });
                         });
-                        
 
-                        // console.log("before tempCities " + typeof(tempCities))
-                        this.setState({ moviesData: tempCities })
+
+                        // console.log("before tempMovies " + typeof(tempMovies))
+                        this.setState({ moviesData: tempMovies })
 
 
                         console.log("Going to iterate list")
                         this.state.moviesData.map(function (item, i) {
-                        console.log(item)
-                            })
+                            console.log(item._source.id)
+                        })
 
 
                         // console.log("moviesdata"+ this.state.moviesData + "typeof" + typeof(this.state.moviesData)) 
                         this.setState({ moviesCollectin: true })
 
-                        
+
                     })
                     .catch(console.log)
                 //Send state to the server code
 
-                
+
             }
 
 
@@ -154,13 +153,14 @@
                             <div className='input-group'>
                                 <input type="text" className="form-control" onChange={this.updateInput} placeholder="Search by ID"></input>
                                 <input type="submit" onClick={this.handleSubmit} ></input>
+                                
                                 <input type="text" className="form-control" onChange={this.updateInputName} placeholder="Search by Title"></input>
                                 <input type="submit" onClick={this.searchViaName} ></input>
                             </div>
-                            
+
                             {console.log("Going to iterate list from render()")}
                             {this.state.moviesData.map(function (item, i) {
-                            console.log(item)
+                                console.log(item)
                             })}
 
 
@@ -171,7 +171,7 @@
                         </div>
                     </div>
 
-                    
+
                 );
             }
         }
