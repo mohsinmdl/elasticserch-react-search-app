@@ -38,16 +38,21 @@
             )
         };
 
-        const MoviesList = (movies) => {
+        const MoviesList = ({movies}) => {
             return (
 
-
                 <div>
-                
+
                     {console.log("Going to iterate list from MoviesList")}
                             {movies.map(function (item, i) {
-                                <div> {item}</div>
+                                {console.log(item)}
+                                <li key={item.id}>{item.title}</li>
+                     
+                                
                             })}
+
+                    
+
                 </div>
 
 
@@ -116,7 +121,15 @@
                         let allmovies = data.hits.hits;
                         let tempMovies = [];
                         allmovies.forEach(elem => {
-                            tempMovies.push({ _source: elem['_source'] });
+                            tempMovies.push({
+
+                                id: elem['_source'].id,
+                                labels: elem['_source'].labels,
+                                tagline: elem['_source'].tagline,
+                                title: elem['_source'].title,
+                                released: elem['_source'].released
+
+                            });
                         });
 
 
@@ -126,7 +139,7 @@
 
                         console.log("Going to iterate list")
                         this.state.moviesData.map(function (item, i) {
-                            console.log(item._source.id)
+                            console.log(item)
                         })
 
 
@@ -153,7 +166,7 @@
                             <div className='input-group'>
                                 <input type="text" className="form-control" onChange={this.updateInput} placeholder="Search by ID"></input>
                                 <input type="submit" onClick={this.handleSubmit} ></input>
-                                
+
                                 <input type="text" className="form-control" onChange={this.updateInputName} placeholder="Search by Title"></input>
                                 <input type="submit" onClick={this.searchViaName} ></input>
                             </div>
