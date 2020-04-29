@@ -49,7 +49,7 @@
                 fetch('http://localhost:9200/neo-movie/Movie/805')
                     .then(res => res.json())
                     .then((data) => {
-                        this.setState({ movies: data._source.id })
+                        this.setState({ movies: data._source })
                         console.log(data._source)
 
                     })
@@ -58,7 +58,7 @@
 
             render() {
                 return (
-                    <Movies movies={this.state} />
+                    <Movies movies={this.state.movies} />
                 )
             }
 
