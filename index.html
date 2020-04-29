@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>React Project</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <script src="https://unpkg.com/react@16.7.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.7.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        .heading {
+            color: purple;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+
+        const Movies = ({ movies }) => {
+            return (
+                <div>
+                    <center><h1>Contact List</h1></center>
+                    <div className="card">
+                        <div className="card-body">
+                            <h1 className="card-title">Title: {movies.title}</h1>
+                            <p className="card-text">id: {movies.id}</p>
+                            <p className="card-subtitle mb-2 text-muted">released: {movies.released}</p>
+                            <p className="card-text">tagline: {movies.tagline}</p>
+                        </div>
+                    </div>
+                </div>
+            )
+        };
+
+        
+        class App extends React.Component {
+            state = {
+                movies: []
+            }
+
+            componentDidMount() {
+                // fetch('http://localhost:9200/*/_search?q=title:the')
+                fetch('http://localhost:9200/neo-movie/Movie/805')
+                    .then(res => res.json())
+                    .then((data) => {
+                        this.setState({ movies: data._source.id })
+                        console.log(data._source)
+
+                    })
+                    .catch(console.log)
+            }
+
+            render() {
+                return (
+                    <Movies movies={this.state} />
+                )
+            }
+
+
+        }
+
+
+        ReactDOM.render(
+            <App />,
+            document.getElementById("root")
+        );
+    </script>
+    
+</body>
+</html>
