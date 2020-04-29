@@ -23,9 +23,9 @@
 
 
         const Movies = ({ movies }) => {
+            console.log("RESULT : " , movies)
             return (
                 <div>
-
                     <div className="card">
                         <div className="card-body">
                             <h1 className="card-title">Title: {movies.title}</h1>
@@ -38,31 +38,18 @@
             )
         };
 
-        const MoviesList = ({movies}) => {
+        const MoviesList = ({ movies }) => {
             return (
-
                 <div>
-
                     {console.log("Going to iterate list from MoviesList")}
-                            {movies.map(function (item, i) {
-                                {console.log(item)}
-                                <li key={item.id}>{item.title}</li>
-                     
-                                
-                            })}
-
-                    
-
+                    {movies.map((item, i) => (
+                        <Movies movies={item} />
+                    ))}
                 </div>
-
-
-
             )
         };
 
-
-
-
+ 
         class InputApp extends React.Component {
 
 
@@ -103,7 +90,6 @@
                     .then((data) => {
                         this.setState({ movies: data._source })
                         console.log(data._source)
-
                     })
                     .catch(console.log)
                 //Send state to the server code
@@ -131,22 +117,14 @@
 
                             });
                         });
-
-
                         // console.log("before tempMovies " + typeof(tempMovies))
                         this.setState({ moviesData: tempMovies })
-
-
                         console.log("Going to iterate list")
                         this.state.moviesData.map(function (item, i) {
                             console.log(item)
                         })
-
-
                         // console.log("moviesdata"+ this.state.moviesData + "typeof" + typeof(this.state.moviesData)) 
                         this.setState({ moviesCollectin: true })
-
-
                     })
                     .catch(console.log)
                 //Send state to the server code
