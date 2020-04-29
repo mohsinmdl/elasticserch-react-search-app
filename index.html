@@ -56,20 +56,7 @@
 
             }
 
-            // componentDidMount() {
-            //     // fetch('http://localhost:9200/*/_search?q=title:the')
-            //     fetch('http://localhost:9200/neo-movie/Movie/805')
-            //         .then(res => res.json())
-            //         .then((data) => {
-            //             this.setState({ movies: data._source })
-            //             console.log(data._source)
-
-            //         })
-            //         .catch(console.log)
-            // }
-
-
-
+            
             updateInput(event) {
                 this.setState({ username: event.target.value })
             }
@@ -99,17 +86,12 @@
                         <div className="jumbotron"><center><h1>Elasticsearch-React Search Demo</h1></center></div>
                         <div className="container">
                             <div className='input-group'>
-                                <input type="text" className="form-control" onChange={this.updateInput}></input>
+                                <input type="text" className="form-control" onChange={this.updateInput} placeholder="ID "></input>
                                 <input type="submit" onClick={this.handleSubmit} ></input>
                             </div>
                                 <Movies movies={this.state.movies} />
                         </div>
-
-
-
                     </div>
-
-
 
                 );
             }
